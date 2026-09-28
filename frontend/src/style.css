@@ -1,7 +1,7 @@
-:root { font-family: 'DM Sans', sans-serif; color: #172d44; background: #f6f8fa; font-synthesis: none; }
+:root { font-family: 'DM Sans Variable', sans-serif; color: #172d44; background: #f6f8fa; font-synthesis: none; }
 * { box-sizing: border-box; }
 body { margin: 0; }
-h1,h2,h3,.brand-name { font-family: 'Manrope', sans-serif; letter-spacing: -.045em; }
+h1,h2,h3,.brand-name { font-family: 'Manrope Variable', sans-serif; letter-spacing: -.045em; }
 .mantine-AppShell-header { border-bottom: 1px solid #e6ebef; background: #fff; }
 .mantine-AppShell-main { background: #f6f8fa; }
 .sidebar { background: #fff; border-right: 1px solid #e6ebef; }
@@ -35,12 +35,12 @@ h1,h2,h3,.brand-name { font-family: 'Manrope', sans-serif; letter-spacing: -.045
 .feature-card,.diagram-panel,.table-shell { background: white; border: 1px solid #e5ebef; box-shadow: 0 6px 22px rgba(15,38,58,.035); }
 .feature-card { min-height: 220px; }
 .feature-card h3 { font-size: 17px; }
-.card-number { color: #becbd3; font: 800 25px 'Manrope',sans-serif; }
+.card-number { color: #becbd3; font: 800 25px 'Manrope Variable',sans-serif; }
 .info-strip { background: #e8f4f1; color: #1c5149; }
 .diagram-frame { background: #fff; }
 .diagram-canvas { height: 470px; overflow: hidden; }
 .diagram-canvas .djs-container { background: #fff; }
-.diagram-canvas .djs-label { font-family: 'DM Sans',sans-serif !important; }
+.diagram-canvas .djs-label { font-family: 'DM Sans Variable',sans-serif !important; }
 .metric { background: #f5f8fa; border: 1px solid #e8edf1; }
 .table-shell { overflow: hidden; }
 .table-shell .mantine-Table-thead { background: #f1f5f8; color: #5b7081; }

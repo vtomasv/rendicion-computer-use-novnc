@@ -8,9 +8,11 @@ from __future__ import annotations
 
 import os
 import fcntl
+import io
 import subprocess
 import sys
 import time
+import unicodedata
 from pathlib import Path
 
 from app import core
@@ -54,6 +56,29 @@ def safe_excel(value: str) -> str:
     """Evita que el contenido de boletas cree fórmulas al pegarlo en Calc."""
     text = str(value)
     return "'" + text if text.lstrip().startswith(("=", "+", "-", "@")) else text
+
+
+def wait_mail_form(gui, claim_id: str) -> None:
+    """Observa píxeles del escritorio; no confunde el título del tab con contenido cargado."""
+    for attempt in range(2):
+        until = time.monotonic() + (15 if attempt == 0 else 25)
+        while time.monotonic() < until:
+            capture = io.BytesIO()
+            gui.screenshot().save(capture, format="PNG")
+            result = subprocess.run(["tesseract", "stdin", "stdout", "-l", "spa"],
+                                    input=capture.getvalue(), capture_output=True, timeout=12)
+            text = unicodedata.normalize("NFKD", result.stdout.decode("utf-8", errors="replace"))
+            text = text.encode("ascii", errors="ignore").decode("ascii").lower()
+            if "enviar rendicion" in text and "contabilidad" in text:
+                core.event(claim_id, "Observación visual", "Formulario de correo visible según OCR de pantalla")
+                return
+            time.sleep(1)
+        if attempt == 0:
+            if "Chromium" not in active_window():
+                raise RuntimeError("El navegador perdió el foco antes de cargar el formulario")
+            gui.hotkey("ctrl", "r")
+            core.event(claim_id, "Recarga visual", "El formulario no apareció; Chromium se recargó por teclado")
+    raise RuntimeError("El formulario de correo no apareció en el escritorio después de una recarga")
 
 
 def run(claim_id: str) -> None:
@@ -167,7 +192,7 @@ def run(claim_id: str) -> None:
                                 "--new-window", url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
         wait_for("Chromium", timeout=30)
-        time.sleep(2)
+        wait_mail_form(gui, claim_id)
         observe("correo-borrador", "Formulario de correo visible en Chromium, con adjuntos identificados")
         # El formulario escucha Ctrl+Enter: acto de envío realizado desde la interfaz gráfica.
         gui.hotkey("ctrl", "enter")

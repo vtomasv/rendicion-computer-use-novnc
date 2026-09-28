@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { MantineProvider, AppShell, NavLink, Group, Stack, Title, Text, Badge, Button, Paper, SimpleGrid, ThemeIcon, Table, FileInput, TextInput, Select, Alert, Timeline, Divider, ScrollArea, Loader, Modal, Textarea, Box, Anchor, Center, ActionIcon, Tooltip } from '@mantine/core';
 import { IconReceipt2, IconLayoutDashboard, IconArrowsRightLeft, IconRobot, IconDeviceDesktop, IconFileSpreadsheet, IconMail, IconExternalLink, IconUpload, IconCheck, IconAlertTriangle, IconArrowRight, IconDownload, IconRefresh, IconShieldCheck, IconPhoto, IconPlayerPlay, IconClock, IconCircleCheck, IconCircleX, IconInfoCircle, IconGitBranch, IconEye } from '@tabler/icons-react';
 import Viewer from 'bpmn-js/lib/Viewer';
+import '@fontsource-variable/dm-sans/wght.css';
+import '@fontsource-variable/manrope/wght.css';
 import '@mantine/core/styles.css';
 import 'bpmn-js/dist/assets/bpmn-js.css';
 import 'bpmn-js/dist/assets/diagram-js.css';

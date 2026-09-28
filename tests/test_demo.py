@@ -105,6 +105,13 @@ def test_spreadsheet_formula_injection_is_neutralized():
     assert safe_excel('Cafeteria Central SpA') == 'Cafeteria Central SpA'
 
 
+def test_frontend_has_no_blocking_external_stylesheets():
+    html = (ROOT / 'frontend' / 'index.html').read_text(encoding='utf-8')
+    assert 'fonts.googleapis.com' not in html
+    assert 'https://' not in html
+    assert '@fontsource-variable/dm-sans/wght.css' in (ROOT / 'frontend' / 'src' / 'main.tsx').read_text(encoding='utf-8')
+
+
 def test_unreadable_receipt_cannot_be_approved(client):
     buffer = io.BytesIO()
     Image.new('RGB', (400, 250), 'white').save(buffer, format='PNG')

@@ -33,6 +33,8 @@ Se implementa la segunda ruta porque el requisito explícito es **entrar en la m
 
 **Requisitos:** Docker Engine con `docker compose` v2 y aproximadamente 4 GB de memoria libre. Se ejecuta en Linux, macOS o Windows con Docker Desktop. No necesita GPU, API key, cuenta de Google ni credenciales de correo para la ruta local.
 
+La **primera compilación** descarga imágenes Docker y dependencias; una vez construida, la demo no depende de Google Fonts ni de otros recursos web para funcionar en la red interna de Compose. DM Sans y Manrope se sirven desde el propio contenedor.
+
 ```bash
 git clone https://github.com/vtomasv/rendicion-computer-use-novnc.git
 cd rendicion-computer-use-novnc
@@ -68,7 +70,7 @@ docker compose restart desktop
 4. **Regla**: los campos obligatorios están presentes, fecha dentro de 365 días, monto positivo y no mayor a **$50.000 CLP**. Se marca `listo` automáticamente. La regla del demo **no es una política contable real**.
 5. Pulse **Ejecutar computer use**. Se crea una ejecución asíncrona y se bloquea una segunda ejecución simultánea del mismo expediente.
 6. En **noVNC** observe cómo el agente: toma una captura; abre **LibreOffice Calc** con `rendiciones.xlsx`; va a la próxima fila con `Ctrl+Inicio` y `↓`; pega campo por campo usando el portapapeles/X11 (`Ctrl+V`, `Tab`); guarda con `Ctrl+S`; verifica **leyendo** el XLSX resultante. El módulo `openpyxl` solo inicializa el encabezado, verifica la fila y sirve para aserciones; **no inserta la fila de la rendición**.
-7. El agente abre **Chromium** en el formulario `/correo/<id>`, toma una captura y activa **Ctrl+Enter**, atajo de envío del propio formulario. El backend envía vía SMTP a `demo@ejemplo.local` con `rendiciones.xlsx` y la boleta adjuntos.
+7. El agente abre **Chromium** en el formulario `/correo/<id>`, verifica por **OCR de la pantalla** que la página terminó de renderizar (recarga una vez si fuese necesario), toma una captura y activa **Ctrl+Enter**, atajo de envío del propio formulario. El backend envía vía SMTP a `demo@ejemplo.local` con `rendiciones.xlsx` y la boleta adjuntos.
 8. Verifique en **Mailpit** que se recibió el mensaje de prueba. Descargue el Excel desde la aplicación y examine la fila registrada. En **Trazabilidad** haga clic en las capturas para inspeccionar los pasos.
 
 ![Agente escribiendo en Calc](docs/images/05-calc-computer-use.png)
@@ -170,4 +172,4 @@ La [CI del repositorio](.github/workflows/ci.yml) vuelve a ejecutar pruebas, com
 
 ## Créditos y licencia
 
-Código de esta demo: **MIT**, véase [`LICENSE`](LICENSE). Tesseract, LibreOffice, Chromium, noVNC, Mailpit, Mantine y bpmn-js conservan sus licencias respectivas. Los dos repositorios de investigación enlazados tienen sus propios términos; **ningún peso de modelo ni imagen OSWorld se redistribuye**. Referencia académica: [Fan et al., *Screenshots or Tools?* (2026)](https://arxiv.org/abs/2608.03327).
+Código de esta demo: **MIT**, véase [`LICENSE`](LICENSE). Tesseract, LibreOffice, Chromium, noVNC, Mailpit, Mantine y bpmn-js conservan sus licencias respectivas. Las fuentes autoalojadas [DM Sans](frontend/public/licenses/DM-Sans-OFL.txt) y [Manrope](frontend/public/licenses/Manrope-OFL.txt) se redistribuyen bajo **SIL OFL 1.1**, no bajo MIT. Los dos repositorios de investigación enlazados tienen sus propios términos; **ningún peso de modelo ni imagen OSWorld se redistribuye**. Referencia académica: [Fan et al., *Screenshots or Tools?* (2026)](https://arxiv.org/abs/2608.03327).

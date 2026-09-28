@@ -12,7 +12,7 @@ npm run build --prefix frontend
 
 `tests/test_demo.py` cubre: OCR de una boleta autoaprobada, rechazo de duplicados por proveedor/folio, excepción por monto y aprobación humana, prevención de correo previo a la fila verificada, bloqueo de destinatarios externos en modo demo, adjuntos del mensaje SMTP, sintaxis XML y compuertas exclusivas en ambos BPMN, y errores de carga. El test de SMTP usa un doble de prueba; la verificación contra Mailpit se describe en el apartado siguiente.
 
-**Resultado verificado el 28-09-2026:** `7 passed`; Vite compiló; `docker compose config --quiet` pasó; la imagen Docker se construyó y ejecutó como usuario `demo` no privilegiado. Un `docker run` con puertos de laboratorio alternativos completó OCR → Calc → SMTP en **22 segundos**, con una fila XLSX, siete capturas y dos adjuntos Mailpit. La configuración Compose se validó sintácticamente; el runtime Compose completo **no** se levantó en este sandbox, que limita el networking Docker. La ruta E2E de los mismos componentes en contenedor sí fue probada.
+**Resultado verificado el 28-09-2026:** pruebas Python y compilación Vite correctas; la imagen Docker se construyó y ejecutó como usuario `demo` no privilegiado. Un `docker run` aislado completó OCR → Calc → SMTP en **22 segundos**, con una fila XLSX, siete capturas y dos adjuntos. Además, **Compose sí se levantó** en este sandbox con puertos alternativos `8091` (app), `6084` (noVNC), `8027` (Mailpit): ambas aplicaciones sirvieron HTTP 200 y el escritorio conectó a `mailpit:1025` por SMTP. Tras sustituir las fuentes remotas por archivos locales, se validó el caso autoaprobado con **reintento sin fila duplicada**, y una excepción nueva `X000783` terminó de punta a punta en **20 segundos** con aprobación humana, una fila, siete capturas y dos adjuntos. El aviso de forwarding IPv4 del Docker restringido del sandbox no impidió la comunicación interna Compose.
 
 ## 2. Prueba integral visual (Docker)
 
@@ -106,5 +106,6 @@ Genera `docs/images/01-...png` a `09-...png` con Playwright sobre la **interfaz 
 | `SMTP: connection refused` | Mailpit aún no inició | `docker compose logs mailpit` y vuelva a ejecutar; la fila XLSX no se duplica |
 | `Boleta duplicada` | Folio/proveedor ya existe en SQLite | Use una muestra de folio distinto; no borre el volumen salvo decisión expresa |
 | `No se confirmó el envío` | Formulario no cargó o API con error | Consulte `docker compose logs desktop`, el expediente y la bandeja Mailpit |
+| Chromium muestra página blanca | Fuentes CSS externas bloquean la ejecución JavaScript en una red cerrada, o caché de una compilación anterior | Este repositorio autoaloja las fuentes; reconstruya con `docker compose up --build -d` y recargue la página |
 
 **Criterio de aceptación:** solo declarar éxito E2E cuando los cuatro elementos concuerden: estado `correo_enviado`, una fila XLSX con ID/proveedor/monto correctos, un mensaje en Mailpit con dos adjuntos y capturas del desktop visibles en el expediente.
