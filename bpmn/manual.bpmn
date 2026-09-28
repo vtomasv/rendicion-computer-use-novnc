@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_manual" targetNamespace="https://example.local/rendiciones">
+  <bpmn:process id="Process_manual" name="Rendición manual" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_manual">
+      <bpmn:lane id="Empleado" name="Empleado">
+        <bpmn:flowNodeRef>m_start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>m_receive</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>m_extract</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>m_excel</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>m_send</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>m_correct</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Contabilidad" name="Contabilidad">
+        <bpmn:flowNodeRef>m_review</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Aprobador" name="Aprobador">
+        <bpmn:flowNodeRef>m_gate</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Sistema" name="Sistema">
+        <bpmn:flowNodeRef>m_reimburse</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>m_end</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="m_start" name="Boleta recibida" />
+    <bpmn:task id="m_receive" name="Recibir boleta" />
+    <bpmn:task id="m_extract" name="Extraer datos a mano" />
+    <bpmn:task id="m_excel" name="Llenar Excel" />
+    <bpmn:sendTask id="m_send" name="Enviar correo" />
+    <bpmn:task id="m_review" name="Revisar rendición" />
+    <bpmn:exclusiveGateway id="m_gate" name="¿Aprueba?" gatewayDirection="Diverging" />
+    <bpmn:task id="m_correct" name="Corregir datos" />
+    <bpmn:task id="m_reimburse" name="Reembolsar (externo)" />
+    <bpmn:endEvent id="m_end" name="Fin" />
+    <bpmn:sequenceFlow id="mf1" sourceRef="m_start" targetRef="m_receive" />
+    <bpmn:sequenceFlow id="mf2" sourceRef="m_receive" targetRef="m_extract" />
+    <bpmn:sequenceFlow id="mf3" sourceRef="m_extract" targetRef="m_excel" />
+    <bpmn:sequenceFlow id="mf4" sourceRef="m_excel" targetRef="m_send" />
+    <bpmn:sequenceFlow id="mf5" sourceRef="m_send" targetRef="m_review" />
+    <bpmn:sequenceFlow id="mf6" sourceRef="m_review" targetRef="m_gate" />
+    <bpmn:sequenceFlow id="mf7" sourceRef="m_gate" targetRef="m_correct" name="No" />
+    <bpmn:sequenceFlow id="mf8" sourceRef="m_correct" targetRef="m_extract" name="Reingresar" />
+    <bpmn:sequenceFlow id="mf9" sourceRef="m_gate" targetRef="m_reimburse" name="Sí" />
+    <bpmn:sequenceFlow id="mf10" sourceRef="m_reimburse" targetRef="m_end" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_manual">
+    <bpmndi:BPMNPlane id="Plane_manual" bpmnElement="Process_manual">
+      <bpmndi:BPMNShape id="Empleado_di" bpmnElement="Empleado" isHorizontal="true">
+        <dc:Bounds x="80" y="80" width="2140" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Contabilidad_di" bpmnElement="Contabilidad" isHorizontal="true">
+        <dc:Bounds x="80" y="240" width="2140" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Aprobador_di" bpmnElement="Aprobador" isHorizontal="true">
+        <dc:Bounds x="80" y="410" width="2140" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Sistema_di" bpmnElement="Sistema" isHorizontal="true">
+        <dc:Bounds x="80" y="580" width="2140" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="m_start_di" bpmnElement="m_start">
+        <dc:Bounds x="135" y="139" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="m_receive_di" bpmnElement="m_receive">
+        <dc:Bounds x="210" y="122" width="130" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="m_extract_di" bpmnElement="m_extract">
+        <dc:Bounds x="390" y="122" width="150" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="m_excel_di" bpmnElement="m_excel">
+        <dc:Bounds x="590" y="122" width="130" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="m_send_di" bpmnElement="m_send">
+        <dc:Bounds x="770" y="122" width="140" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="m_review_di" bpmnElement="m_review">
+        <dc:Bounds x="1010" y="292" width="145" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="m_gate_di" bpmnElement="m_gate" isMarkerVisible="true">
+        <dc:Bounds x="1240" y="470" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="m_correct_di" bpmnElement="m_correct">
+        <dc:Bounds x="1540" y="122" width="135" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="m_reimburse_di" bpmnElement="m_reimburse">
+        <dc:Bounds x="1540" y="635" width="175" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="m_end_di" bpmnElement="m_end">
+        <dc:Bounds x="1800" y="652" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="mf1_di" bpmnElement="mf1">
+        <di:waypoint x="171" y="157" />
+        <di:waypoint x="210" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf2_di" bpmnElement="mf2">
+        <di:waypoint x="340" y="157" />
+        <di:waypoint x="390" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf3_di" bpmnElement="mf3">
+        <di:waypoint x="540" y="157" />
+        <di:waypoint x="590" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf4_di" bpmnElement="mf4">
+        <di:waypoint x="720" y="157" />
+        <di:waypoint x="770" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf5_di" bpmnElement="mf5">
+        <di:waypoint x="910" y="157" />
+        <di:waypoint x="970" y="157" />
+        <di:waypoint x="970" y="327" />
+        <di:waypoint x="1010" y="327" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf6_di" bpmnElement="mf6">
+        <di:waypoint x="1155" y="327" />
+        <di:waypoint x="1265" y="327" />
+        <di:waypoint x="1265" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf7_di" bpmnElement="mf7">
+        <di:waypoint x="1265" y="470" />
+        <di:waypoint x="1265" y="215" />
+        <di:waypoint x="1607" y="215" />
+        <di:waypoint x="1607" y="192" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf8_di" bpmnElement="mf8">
+        <di:waypoint x="1607" y="122" />
+        <di:waypoint x="1607" y="95" />
+        <di:waypoint x="465" y="95" />
+        <di:waypoint x="465" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf9_di" bpmnElement="mf9">
+        <di:waypoint x="1290" y="495" />
+        <di:waypoint x="1627" y="495" />
+        <di:waypoint x="1627" y="635" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf10_di" bpmnElement="mf10">
+        <di:waypoint x="1715" y="670" />
+        <di:waypoint x="1800" y="670" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

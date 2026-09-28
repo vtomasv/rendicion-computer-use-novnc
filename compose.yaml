@@ -1,0 +1,28 @@
+services:
+  mailpit:
+    image: axllent/mailpit:v1.31.3
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${MAILPIT_PORT:-8025}:8025"
+    environment:
+      MP_MAX_MESSAGES: "100"
+  desktop:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - mailpit
+    ports:
+      - "127.0.0.1:${APP_PORT:-8080}:8080"
+      - "127.0.0.1:${NOVNC_PORT:-6080}:6080"
+    volumes:
+      - demo-data:/workspace/data
+    environment:
+      DISPLAY: ":99"
+      SMTP_HOST: mailpit
+      SMTP_PORT: "1025"
+      SMTP_FROM: rendiciones@demo.local
+      AUTO_APPROVE_MAX_CLP: "50000"
+      ALLOW_EXTERNAL_EMAIL: "0"
+    shm_size: "1gb"
+volumes:
+  demo-data:

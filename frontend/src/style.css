@@ -1,0 +1,59 @@
+:root { font-family: 'DM Sans', sans-serif; color: #172d44; background: #f6f8fa; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+h1,h2,h3,.brand-name { font-family: 'Manrope', sans-serif; letter-spacing: -.045em; }
+.mantine-AppShell-header { border-bottom: 1px solid #e6ebef; background: #fff; }
+.mantine-AppShell-main { background: #f6f8fa; }
+.sidebar { background: #fff; border-right: 1px solid #e6ebef; }
+.brand-icon { background: #17324d; color: white; height: 40px; width: 40px; border-radius: 10px; display: grid; place-items: center; }
+.brand-name { letter-spacing: .03em; }
+.brand-name span { color: #298777; }
+.tracking,.overline,.eyebrow { letter-spacing: .14em; }
+.sidebar-link { border-radius: 8px; min-height: 45px; margin-bottom: 4px; color: #667688; font-weight: 600; }
+.sidebar-link[data-active] { background: #e8f4f1; color: #146a60; }
+.sidebar-link:hover { background: #f3f6f8; }
+.sidebar-bottom { margin-top: auto; padding: 8px 15px 18px; }
+.content-wrap { max-width: 1350px; margin: 0 auto; padding: 4px 0 0; }
+.eyebrow,.overline { color: #16816f; font-weight: 800; font-size: 11px; }
+.eyebrow { margin: 12px 0 15px; }
+.page-title { margin-bottom: 24px; }
+.page-title h1 { font-size: clamp(28px, 3.1vw, 40px); }
+.hero { background: #172d44; color: white; border-radius: 18px; min-height: 328px; padding: 44px 48px; display: flex; overflow: hidden; justify-content: space-between; gap: 28px; position: relative; }
+.hero:before { content: ''; position: absolute; border: 1px solid rgba(255,255,255,.08); width: 540px; height: 540px; border-radius: 50%; right: -110px; top: -280px; }
+.hero-copy { max-width: 650px; z-index: 1; }
+.hero h1 { font-size: clamp(32px, 3.4vw, 49px); line-height: 1.19; margin: 17px 0; font-weight: 800; }
+.hero h1 span { color: #74d5b7; }
+.hero-intro { color: #c2d0db; line-height: 1.75; max-width: 580px; font-size: 15px; }
+.hero-badge { background: #284b5b !important; color: #9be7d2 !important; }
+.hero-side { display: flex; flex-direction: column; justify-content: space-between; align-items: end; min-width: 305px; z-index: 1; }
+.hero-illustration { background: linear-gradient(140deg,#2c5263,#21404d); border: 1px solid #446475; border-radius: 16px; width: 300px; height: 178px; display: grid; place-items: center; color: #bde4dc; transform: rotate(-3deg); box-shadow: 0 25px 50px #071b2770; }
+.hero-flow { display: flex; align-items: center; gap: 9px; font-size: 11px; letter-spacing: .1em; font-weight: 800; }
+.hero-meta { display: flex; gap: 14px; align-items: center; color: #b3c4cd; font-size: 10px; letter-spacing: .12em; font-weight: 800; }
+.hero-meta b { color: #80d9c5; font-size: 26px; letter-spacing: -.04em; }
+.section-heading { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin: 40px 0 20px; }
+.section-heading h2 { font-size: 24px; margin-top: 5px; }
+.feature-card,.diagram-panel,.table-shell { background: white; border: 1px solid #e5ebef; box-shadow: 0 6px 22px rgba(15,38,58,.035); }
+.feature-card { min-height: 220px; }
+.feature-card h3 { font-size: 17px; }
+.card-number { color: #becbd3; font: 800 25px 'Manrope',sans-serif; }
+.info-strip { background: #e8f4f1; color: #1c5149; }
+.diagram-frame { background: #fff; }
+.diagram-canvas { height: 470px; overflow: hidden; }
+.diagram-canvas .djs-container { background: #fff; }
+.diagram-canvas .djs-label { font-family: 'DM Sans',sans-serif !important; }
+.metric { background: #f5f8fa; border: 1px solid #e8edf1; }
+.table-shell { overflow: hidden; }
+.table-shell .mantine-Table-thead { background: #f1f5f8; color: #5b7081; }
+.table-shell .mantine-Table-th { font-size: 11px; letter-spacing: .05em; text-transform: uppercase; }
+.screenshot-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+.shot { border: 1px solid #dee7ec; background: #fff; padding: 0; border-radius: 8px; overflow: hidden; cursor: pointer; text-align: left; }
+.shot:hover { border-color: #1e806e; transform: translateY(-2px); transition: transform .18s ease, border-color .18s ease; }
+.shot img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
+.shot span { font-size: 11px; color: #53677b; text-transform: uppercase; font-weight: 800; letter-spacing: .04em; padding: 9px; display: block; }
+.ocr-block { background: #f5f8fa; color: #415569; border: 1px solid #e5ebef; border-radius: 8px; white-space: pre-wrap; font-size: 12px; padding: 16px; }
+.footer { margin-top: 52px; border-top: 1px solid #e0e8ec; padding: 20px 0 10px; color: #7c8d9d; font-size: 11px; }
+.compose-page { min-height: 100vh; display: grid; place-items: center; padding: 30px; background: radial-gradient(circle at 85% 5%,#e2eee9,transparent 35%), #eff3f6; }
+.compose-card { width: min(740px,100%); background: #fff; }
+.compose-summary { background: #f1f6f8; }
+@media(max-width: 900px) { .hero-side { display: none; } .hero { padding: 30px; min-height: 300px; } .page-title,.section-heading { align-items: start; flex-direction: column; } }
+@media(max-width: 767px) { .mantine-AppShell-navbar { display: none; } .mantine-AppShell-main { padding: 20px !important; } .hero { padding: 24px; } .hero h1 { font-size: 30px; } .diagram-canvas { height: 360px; } }

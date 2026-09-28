@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_automatizado" targetNamespace="https://example.local/rendiciones">
+  <bpmn:process id="Process_automatizado" name="Rendición automatizado" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_automatizado">
+      <bpmn:lane id="Empleado" name="Empleado">
+        <bpmn:flowNodeRef>a_start</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Sistema" name="Sistema">
+        <bpmn:flowNodeRef>a_ocr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>a_rules</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>a_gate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>a_merge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>a_excel</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>a_mail</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>a_end</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Aprobador" name="Aprobador">
+        <bpmn:flowNodeRef>a_approval</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>a_decision</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>a_rejected</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="a_start" name="Subir boleta" />
+    <bpmn:serviceTask id="a_ocr" name="OCR / extracción" />
+    <bpmn:businessRuleTask id="a_rules" name="Validar política" />
+    <bpmn:exclusiveGateway id="a_gate" name="¿Cumple política?" gatewayDirection="Diverging" />
+    <bpmn:userTask id="a_approval" name="Aprobación jefatura" />
+    <bpmn:exclusiveGateway id="a_decision" name="¿Autoriza?" gatewayDirection="Diverging" />
+    <bpmn:endEvent id="a_rejected" name="Rechazada" />
+    <bpmn:exclusiveGateway id="a_merge" name="" gatewayDirection="Diverging" />
+    <bpmn:task id="a_excel" name="Escribir en Calc (GUI)" />
+    <bpmn:sendTask id="a_mail" name="Enviar correo (GUI)" />
+    <bpmn:endEvent id="a_end" name="Fin de demo" />
+    <bpmn:sequenceFlow id="af1" sourceRef="a_start" targetRef="a_ocr" />
+    <bpmn:sequenceFlow id="af2" sourceRef="a_ocr" targetRef="a_rules" />
+    <bpmn:sequenceFlow id="af3" sourceRef="a_rules" targetRef="a_gate" />
+    <bpmn:sequenceFlow id="af4" sourceRef="a_gate" targetRef="a_merge" name="Autoaprobación" />
+    <bpmn:sequenceFlow id="af5" sourceRef="a_gate" targetRef="a_approval" name="Excepción" />
+    <bpmn:sequenceFlow id="af6" sourceRef="a_approval" targetRef="a_decision" />
+    <bpmn:sequenceFlow id="af6a" sourceRef="a_decision" targetRef="a_merge" name="Sí" />
+    <bpmn:sequenceFlow id="af6b" sourceRef="a_decision" targetRef="a_rejected" name="No" />
+    <bpmn:sequenceFlow id="af7" sourceRef="a_merge" targetRef="a_excel" />
+    <bpmn:sequenceFlow id="af8" sourceRef="a_excel" targetRef="a_mail" />
+    <bpmn:sequenceFlow id="af9" sourceRef="a_mail" targetRef="a_end" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_automatizado">
+    <bpmndi:BPMNPlane id="Plane_automatizado" bpmnElement="Process_automatizado">
+      <bpmndi:BPMNShape id="Empleado_di" bpmnElement="Empleado" isHorizontal="true">
+        <dc:Bounds x="80" y="80" width="2140" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Sistema_di" bpmnElement="Sistema" isHorizontal="true">
+        <dc:Bounds x="80" y="240" width="2140" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Aprobador_di" bpmnElement="Aprobador" isHorizontal="true">
+        <dc:Bounds x="80" y="440" width="2140" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="a_start_di" bpmnElement="a_start">
+        <dc:Bounds x="140" y="140" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="a_ocr_di" bpmnElement="a_ocr">
+        <dc:Bounds x="240" y="300" width="145" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="a_rules_di" bpmnElement="a_rules">
+        <dc:Bounds x="450" y="300" width="145" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="a_gate_di" bpmnElement="a_gate" isMarkerVisible="true">
+        <dc:Bounds x="660" y="312" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="a_approval_di" bpmnElement="a_approval">
+        <dc:Bounds x="780" y="495" width="175" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="a_decision_di" bpmnElement="a_decision" isMarkerVisible="true">
+        <dc:Bounds x="1010" y="507" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="a_rejected_di" bpmnElement="a_rejected">
+        <dc:Bounds x="1190" y="514" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="a_merge_di" bpmnElement="a_merge" isMarkerVisible="true">
+        <dc:Bounds x="1040" y="312" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="a_excel_di" bpmnElement="a_excel">
+        <dc:Bounds x="1165" y="300" width="180" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="a_mail_di" bpmnElement="a_mail">
+        <dc:Bounds x="1420" y="300" width="170" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="a_end_di" bpmnElement="a_end">
+        <dc:Bounds x="1690" y="319" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="af1_di" bpmnElement="af1">
+        <di:waypoint x="176" y="158" />
+        <di:waypoint x="205" y="158" />
+        <di:waypoint x="205" y="338" />
+        <di:waypoint x="240" y="338" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="af2_di" bpmnElement="af2">
+        <di:waypoint x="385" y="338" />
+        <di:waypoint x="450" y="338" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="af3_di" bpmnElement="af3">
+        <di:waypoint x="595" y="338" />
+        <di:waypoint x="660" y="338" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="af4_di" bpmnElement="af4">
+        <di:waypoint x="710" y="337" />
+        <di:waypoint x="1040" y="337" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="af5_di" bpmnElement="af5">
+        <di:waypoint x="685" y="362" />
+        <di:waypoint x="685" y="532" />
+        <di:waypoint x="780" y="532" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="af6_di" bpmnElement="af6">
+        <di:waypoint x="955" y="532" />
+        <di:waypoint x="1010" y="532" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="af6a_di" bpmnElement="af6a">
+        <di:waypoint x="1035" y="507" />
+        <di:waypoint x="1035" y="422" />
+        <di:waypoint x="1065" y="422" />
+        <di:waypoint x="1065" y="362" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="af6b_di" bpmnElement="af6b">
+        <di:waypoint x="1060" y="532" />
+        <di:waypoint x="1190" y="532" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="af7_di" bpmnElement="af7">
+        <di:waypoint x="1090" y="337" />
+        <di:waypoint x="1165" y="337" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="af8_di" bpmnElement="af8">
+        <di:waypoint x="1345" y="337" />
+        <di:waypoint x="1420" y="337" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="af9_di" bpmnElement="af9">
+        <di:waypoint x="1590" y="337" />
+        <di:waypoint x="1690" y="337" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
